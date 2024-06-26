@@ -1,0 +1,32 @@
+import folium
+from geopy.geocoders import Nominatim
+import webbrowser
+
+# Function to get the current location
+def get_current_location():
+    # Initialize Nominatim API
+    geolocator = Nominatim(user_agent="geoapiExercises")
+    
+    # Get the location of the user (for example, we use a fixed location here)
+    location = geolocator.geocode("1600 Amphitheatre Parkway, Mountain View, CA")
+    
+    return location.latitude, location.longitude
+
+# Function to create a map with the current location
+def create_map(lat, lon):
+    # Create a folium map centered around the current location
+    my_map = folium.Map(location=[lat, lon], zoom_start=15)
+    
+    # Add a marker to the map
+    folium.Marker([lat, lon], popup="Current Location").add_to(my_map)
+    
+    # Save the map as an HTML file
+    my_map.save("current_location_map.html")
+    
+    # Open the map in a web browser
+    webbrowser.open("current_location_map.html")
+
+# Main function
+if _name_ == "_main_":
+    lat, lon = get_current_location()
+    create_map(lat, lon)
